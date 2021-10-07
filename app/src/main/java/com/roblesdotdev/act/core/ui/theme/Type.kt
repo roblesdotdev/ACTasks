@@ -1,4 +1,4 @@
-package com.roblesdotdev.act.ui.theme
+package com.roblesdotdev.act.core.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

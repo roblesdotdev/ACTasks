@@ -1,5 +1,5 @@
 @file:Suppress("MagicNumber")
-package com.roblesdotdev.act.ui.theme
+package com.roblesdotdev.act.core.ui.theme
 
 import androidx.compose.material.lightColors
 import androidx.compose.ui.graphics.Color
@@ -13,7 +13,7 @@ val lightColorPalette = lightColors(
     primary = PrimaryBlue,
     onPrimary = Color.White,
     secondary = SecondaryOrange,
-    onSecondary = Color.White,
+    onSecondary = Color.Black,
     background = LightGray,
     onBackground = DarkGray,
     surface = Color.White,
