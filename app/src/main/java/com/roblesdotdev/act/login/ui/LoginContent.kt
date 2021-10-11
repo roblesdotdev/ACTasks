@@ -26,9 +26,22 @@ import com.roblesdotdev.act.core.ui.theme.ACTasksTheme
 
 private const val APP_LOGO_WIDTH_PERCENTAGE = 0.5F
 
+/**
+ * This composable maintains the entire screen for handling user login.
+ *
+ * @param[viewState] The current state of the screen to render.
+ * @param[onUsernameChanged] A callback invoked when the user enters their username.
+ * @param[onPasswordChanged] A callback invoked when the user enters their password.
+ * @param[onLoginClicked] A callback invoked when the user clicks the login button.
+ * @param[onSignupClicked] A callback invoked when the user clicks the sign up button.
+ */
 @Composable
 fun LoginContent(
     viewState: LoginViewState,
+    onUsernameChanged: (String) -> Unit,
+    onPasswordChanged: (String) -> Unit,
+    onLoginClicked: () -> Unit,
+    onSignupClicked: () -> Unit,
 ) {
     Surface(
         color = MaterialTheme.colors.background
@@ -45,19 +58,19 @@ fun LoginContent(
 
             Spacer(modifier = Modifier.weight(1F))
 
-            UsernameInput(text = viewState.username, onTextChanged = {})
+            UsernameInput(text = viewState.username, onTextChanged = onUsernameChanged)
 
             VerticalSpacer(height = 12.dp)
 
-            PasswordInput(text = viewState.password, onTextChanged = {})
+            PasswordInput(text = viewState.password, onTextChanged = onPasswordChanged)
 
             VerticalSpacer(height = 48.dp)
 
-            LoginButton(onClick = {})
+            LoginButton(onClick = onLoginClicked)
 
             VerticalSpacer(height = 12.dp)
 
-            SignupButton(onClick = {})
+            SignupButton(onClick = onSignupClicked)
         }
     }
 }
@@ -118,6 +131,12 @@ private fun AppLogo() {
 fun LoginContentPreview() {
     val viewState = LoginViewState(username = "", password = "")
     ACTasksTheme {
-        LoginContent(viewState = viewState)
+        LoginContent(
+            viewState = viewState,
+            onUsernameChanged = {},
+            onPasswordChanged = {},
+            onLoginClicked = {},
+            onSignupClicked = {}
+        )
     }
 }
