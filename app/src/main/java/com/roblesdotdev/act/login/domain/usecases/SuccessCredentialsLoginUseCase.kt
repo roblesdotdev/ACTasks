@@ -1,5 +1,6 @@
 package com.roblesdotdev.act.login.domain.usecases
 
+import com.roblesdotdev.act.login.domain.model.Credentials
 import com.roblesdotdev.act.login.domain.model.LoginResult
 
 /**
@@ -7,7 +8,8 @@ import com.roblesdotdev.act.login.domain.model.LoginResult
  * that is always successful.
  */
 class SuccessCredentialsLoginUseCase : CredentialsLoginUseCase {
-    override suspend fun login(email: Email, password: Password): LoginResult {
-        return LoginResult.Success
+
+    override suspend fun invoke(credentials: Credentials): LoginResult {
+        TODO("Not yet implemented")
     }
 }
