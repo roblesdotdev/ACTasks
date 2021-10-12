@@ -3,6 +3,7 @@ package com.roblesdotdev.act.login.domain.usecases
 import com.google.common.truth.Truth.assertThat
 import com.roblesdotdev.act.core.data.Result
 import com.roblesdotdev.act.fakes.FakeLoginRepository
+import com.roblesdotdev.act.fakes.FakeTokenRepository
 import com.roblesdotdev.act.login.domain.model.AuthToken
 import com.roblesdotdev.act.login.domain.model.Credentials
 import com.roblesdotdev.act.login.domain.model.Email
@@ -28,10 +29,12 @@ class ProdCredentialsLoginUseCaseTest {
         refreshToken = RefreshToken("Refresh")
     )
     private lateinit var loginRepository: FakeLoginRepository
+    private lateinit var tokenRepository: FakeTokenRepository
 
     @Before
     fun setUp() {
         loginRepository = FakeLoginRepository()
+        tokenRepository = FakeTokenRepository()
     }
 
     @Test
@@ -41,11 +44,13 @@ class ProdCredentialsLoginUseCaseTest {
         )
         loginRepository.mockWithCredentials(defaultCredentials, loginResponse)
         val useCase = ProdCredentialsLoginUseCase(
-            loginRepository = loginRepository.mock
+            loginRepository = loginRepository.mock,
+            tokenRepository = tokenRepository.mock,
         )
 
         val result = useCase(defaultCredentials)
         assertThat(result).isEqualTo(LoginResult.Success)
+        tokenRepository.verifyTokenStored(defaultToken)
     }
 
     @Test
@@ -55,11 +60,13 @@ class ProdCredentialsLoginUseCaseTest {
         )
         loginRepository.mockWithCredentials(defaultCredentials, loginResponse)
         val useCase = ProdCredentialsLoginUseCase(
-            loginRepository = loginRepository.mock
+            loginRepository = loginRepository.mock,
+            tokenRepository = tokenRepository.mock,
         )
 
         val result = useCase(defaultCredentials)
         assertThat(result).isEqualTo(LoginResult.Failure.Unknown)
+        tokenRepository.verifyNoTokenStored()
     }
 
     @Test
@@ -69,10 +76,12 @@ class ProdCredentialsLoginUseCaseTest {
         )
         loginRepository.mockWithCredentials(defaultCredentials, loginResponse)
         val useCase = ProdCredentialsLoginUseCase(
-            loginRepository = loginRepository.mock
+            loginRepository = loginRepository.mock,
+            tokenRepository = tokenRepository.mock,
         )
 
         val result = useCase(defaultCredentials)
         assertThat(result).isEqualTo(LoginResult.Failure.InvalidCredentials)
+        tokenRepository.verifyNoTokenStored()
     }
 }
