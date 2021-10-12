@@ -30,7 +30,7 @@ private const val APP_LOGO_WIDTH_PERCENTAGE = 0.5F
  * This composable maintains the entire screen for handling user login.
  *
  * @param[viewState] The current state of the screen to render.
- * @param[onUsernameChanged] A callback invoked when the user enters their username.
+ * @param[onEmailChanged] A callback invoked when the user enters their email.
  * @param[onPasswordChanged] A callback invoked when the user enters their password.
  * @param[onLoginClicked] A callback invoked when the user clicks the login button.
  * @param[onSignupClicked] A callback invoked when the user clicks the sign up button.
@@ -38,7 +38,7 @@ private const val APP_LOGO_WIDTH_PERCENTAGE = 0.5F
 @Composable
 fun LoginContent(
     viewState: LoginViewState,
-    onUsernameChanged: (String) -> Unit,
+    onEmailChanged: (String) -> Unit,
     onPasswordChanged: (String) -> Unit,
     onLoginClicked: () -> Unit,
     onSignupClicked: () -> Unit,
@@ -58,7 +58,7 @@ fun LoginContent(
 
             Spacer(modifier = Modifier.weight(1F))
 
-            UsernameInput(text = viewState.username, onTextChanged = onUsernameChanged)
+            EmailInput(text = viewState.email, onTextChanged = onEmailChanged)
 
             VerticalSpacer(height = 12.dp)
 
@@ -101,11 +101,11 @@ private fun PasswordInput(text: String, onTextChanged: (String) -> Unit) {
 }
 
 @Composable
-private fun UsernameInput(text: String, onTextChanged: (String) -> Unit) {
+private fun EmailInput(text: String, onTextChanged: (String) -> Unit) {
     ACTextField(
         text = text,
         onTextChanged = onTextChanged,
-        labelText = stringResource(R.string.username)
+        labelText = stringResource(R.string.email)
     )
 }
 
@@ -129,11 +129,11 @@ private fun AppLogo() {
 )
 @Composable
 fun LoginContentPreview() {
-    val viewState = LoginViewState(username = "", password = "")
+    val viewState = LoginViewState(email = "", password = "")
     ACTasksTheme {
         LoginContent(
             viewState = viewState,
-            onUsernameChanged = {},
+            onEmailChanged = {},
             onPasswordChanged = {},
             onLoginClicked = {},
             onSignupClicked = {}
