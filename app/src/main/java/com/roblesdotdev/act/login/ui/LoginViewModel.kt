@@ -4,13 +4,10 @@ import androidx.lifecycle.ViewModel
 import com.roblesdotdev.act.login.domain.model.Credentials
 import com.roblesdotdev.act.login.domain.model.Email
 import com.roblesdotdev.act.login.domain.model.Password
-import com.roblesdotdev.act.login.domain.usecases.CredentialsLoginUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class LoginViewModel(
-    private val credentialsLoginUseCase: CredentialsLoginUseCase
-) : ViewModel() {
+class LoginViewModel : ViewModel() {
     private val _viewState: MutableStateFlow<LoginViewState> =
         MutableStateFlow(LoginViewState.Initial)
     val viewState: StateFlow<LoginViewState> = _viewState
