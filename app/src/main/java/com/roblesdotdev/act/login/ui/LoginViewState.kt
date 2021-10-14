@@ -1,5 +1,6 @@
 package com.roblesdotdev.act.login.ui
 
+import com.roblesdotdev.act.core.ui.UIText
 import com.roblesdotdev.act.login.domain.model.Credentials
 import com.roblesdotdev.act.login.domain.model.Email
 import com.roblesdotdev.act.login.domain.model.Password
@@ -42,7 +43,7 @@ sealed class LoginViewState(
      */
     data class SubmissionError(
         override val credentials: Credentials,
-        val errorMessage: String
+        val errorMessage: UIText
     ) : LoginViewState(
         credentials = credentials,
     )
@@ -52,8 +53,8 @@ sealed class LoginViewState(
      */
     data class InputError(
         override val credentials: Credentials,
-        val emailInputErrorMessage: String?,
-        val passwordInputErrorMessage: String?,
+        val emailInputErrorMessage: UIText? = null,
+        val passwordInputErrorMessage: UIText? = null,
     ) : LoginViewState(
         credentials = credentials,
     )
