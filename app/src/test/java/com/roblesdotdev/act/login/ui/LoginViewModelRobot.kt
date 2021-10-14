@@ -1,5 +1,6 @@
 package com.roblesdotdev.act.login.ui
 
+import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import com.roblesdotdev.act.fakes.FakeCredentialsLoginUseCase
 import com.roblesdotdev.act.login.domain.model.Credentials
@@ -41,5 +42,20 @@ class LoginViewModelRobot {
 
     fun assertViewState(expectedViewState: LoginViewState) = apply {
         assertThat(viewModel.viewState.value).isEqualTo(expectedViewState)
+    }
+
+    suspend fun assertViewStatesAfterAction(
+        action: LoginViewModelRobot.() -> Unit,
+        viewStates: List<LoginViewState>,
+    ) = apply {
+        viewModel.viewState.test {
+            action()
+
+            for (state in viewStates) {
+                assertThat(awaitItem()).isEqualTo(state)
+            }
+
+            cancel()
+        }
     }
 }
