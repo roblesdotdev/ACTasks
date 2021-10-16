@@ -14,6 +14,14 @@ sealed class LoginResult {
      */
     sealed class Failure : LoginResult() {
         /**
+         * This will be returned when the user tries to login when either of the input fields
+         * are left empty.
+         */
+        data class EmptyCredentials(
+            val emptyEmail: Boolean,
+            val emptyPassword: Boolean,
+        ) : Failure()
+        /**
          * This will be returned if there was no account matching the requested credentials.
          */
         object InvalidCredentials : Failure()

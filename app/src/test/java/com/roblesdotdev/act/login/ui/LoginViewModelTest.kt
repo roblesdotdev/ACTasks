@@ -2,6 +2,7 @@ package com.roblesdotdev.act.login.ui
 
 import com.roblesdotdev.act.CoroutinesTestRule
 import com.roblesdotdev.act.R
+import com.roblesdotdev.act.ThreadExceptionHandlerTestRule
 import com.roblesdotdev.act.core.ui.UIText
 import com.roblesdotdev.act.login.domain.model.Credentials
 import com.roblesdotdev.act.login.domain.model.Email
@@ -18,6 +19,9 @@ class LoginViewModelTest {
     @get:Rule
     val coroutinesTestRule = CoroutinesTestRule()
 
+    @get:Rule
+    val threadExceptionHandlerTestRule = ThreadExceptionHandlerTestRule()
+
     @Before
     fun setUp() {
         testRobot = LoginViewModelRobot()
@@ -27,7 +31,10 @@ class LoginViewModelTest {
     fun testInitialState() = runBlockingTest {
         testRobot
             .buildViewModel()
-            .expectViewStates(viewStates = listOf(LoginViewState.Initial))
+            .expectViewStates(
+                action = {},
+                viewStates = listOf(LoginViewState.Initial)
+            )
     }
 
     @Test
@@ -56,10 +63,12 @@ class LoginViewModelTest {
         testRobot
             .buildViewModel()
             .expectViewStates(
+                action = {
+                    enterEmail(testEmail)
+                    enterPassword(testPassword)
+                },
                 viewStates = expectedViewStates
             )
-            .enterEmail(testEmail)
-            .enterPassword(testPassword)
     }
 
     @Test
@@ -102,11 +111,13 @@ class LoginViewModelTest {
                 result = LoginResult.Failure.InvalidCredentials,
             )
             .expectViewStates(
+                action = {
+                    enterEmail(testEmail)
+                    enterPassword(testPassword)
+                    clickLogInButton()
+                },
                 viewStates = expectedViewStates
             )
-            .enterEmail(testEmail)
-            .enterPassword(testPassword)
-            .clickLogInButton()
     }
 
     @Test
@@ -149,10 +160,94 @@ class LoginViewModelTest {
                 result = LoginResult.Failure.Unknown,
             )
             .expectViewStates(
+                action = {
+                    enterEmail(testEmail)
+                    enterPassword(testPassword)
+                    clickLogInButton()
+                },
                 viewStates = expectedViewStates
             )
-            .enterEmail(testEmail)
-            .enterPassword(testPassword)
-            .clickLogInButton()
+    }
+
+    @Test
+    fun testSubmitWithoutCredentials() = runBlockingTest {
+        val credentials = Credentials()
+
+        val initialState = LoginViewState.Initial
+        val submittingState = LoginViewState.Submitting(
+            credentials = credentials
+        )
+        val invalidInputState = LoginViewState.Active(
+            credentials = Credentials(),
+            emailInputErrorMessage = UIText.ResourceText(R.string.err_empty_email),
+            passwordInputErrorMessage = UIText.ResourceText(R.string.err_empty_password),
+        )
+
+        testRobot
+            .buildViewModel()
+            .mockLoginResultForCredentials(
+                credentials = credentials,
+                result = LoginResult.Failure.EmptyCredentials(
+                    emptyEmail = true,
+                    emptyPassword = true,
+                )
+            )
+            .expectViewStates(
+                action = {
+                    clickLogInButton()
+                },
+                viewStates = listOf(initialState, submittingState, invalidInputState)
+            )
+    }
+
+    @Test
+    fun testClearErrorsAfterInput() = runBlockingTest {
+        val credentials = Credentials()
+        val testEmail = "testy@mctestface.com"
+        val testPassword = "Hunter2"
+
+        val initialState = LoginViewState.Initial
+        val submittingState = LoginViewState.Submitting(
+            credentials = credentials,
+        )
+        val invalidInputsState = LoginViewState.Active(
+            credentials = credentials,
+            emailInputErrorMessage = UIText.ResourceText(R.string.err_empty_email),
+            passwordInputErrorMessage = UIText.ResourceText(R.string.err_empty_password),
+        )
+        val emailInputState = LoginViewState.Active(
+            credentials = Credentials(email = Email(testEmail)),
+            emailInputErrorMessage = null,
+            passwordInputErrorMessage = UIText.ResourceText(R.string.err_empty_password),
+        )
+        val passwordInputState = LoginViewState.Active(
+            credentials = Credentials(email = Email(testEmail), password = Password(testPassword)),
+            emailInputErrorMessage = null,
+            passwordInputErrorMessage = null,
+        )
+
+        testRobot
+            .buildViewModel()
+            .mockLoginResultForCredentials(
+                credentials = credentials,
+                result = LoginResult.Failure.EmptyCredentials(
+                    emptyEmail = true,
+                    emptyPassword = true,
+                )
+            )
+            .expectViewStates(
+                action = {
+                    clickLogInButton()
+                    enterEmail(testEmail)
+                    enterPassword(testPassword)
+                },
+                viewStates = listOf(
+                    initialState,
+                    submittingState,
+                    invalidInputsState,
+                    emailInputState,
+                    passwordInputState,
+                ),
+            )
     }
 }
