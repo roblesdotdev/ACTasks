@@ -101,7 +101,7 @@ private fun LogoInputsColumn(
         EmailInput(
             text = viewState.credentials.email.value,
             onTextChanged = onEmailChanged,
-            errorMessage = (viewState as? LoginViewState.InputError)?.emailInputErrorMessage?.getString(),
+            errorMessage = (viewState as? LoginViewState.Active)?.emailInputErrorMessage?.getString(),
         )
 
         VerticalSpacer(height = 12.dp)
@@ -109,7 +109,7 @@ private fun LogoInputsColumn(
         PasswordInput(
             text = viewState.credentials.password.value,
             onTextChanged = onPasswordChanged,
-            errorMessage = (viewState as? LoginViewState.InputError)?.passwordInputErrorMessage?.getString(),
+            errorMessage = (viewState as? LoginViewState.Active)?.passwordInputErrorMessage?.getString(),
         )
 
         if (viewState is LoginViewState.SubmissionError) {
@@ -229,10 +229,10 @@ class LoginViewStateProvider : PreviewParameterProvider<LoginViewState> {
                     credentials = activeCredentials,
                     errorMessage = UIText.StringText("Something went wrong."),
                 ),
-                LoginViewState.InputError(
+                LoginViewState.Active(
                     credentials = activeCredentials,
-                    emailInputErrorMessage = UIText.StringText("Please enter an email."),
-                    passwordInputErrorMessage = UIText.StringText("Please enter a password"),
+                    emailInputErrorMessage = UIText.ResourceText(R.string.err_empty_email),
+                    passwordInputErrorMessage = UIText.ResourceText(R.string.err_empty_password),
                 ),
             )
         }
