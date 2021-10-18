@@ -7,6 +7,8 @@ buildscript {
         ktlintPluginVersion = "10.2.0"
         // https://github.com/detekt/detekt/releases
         detektPluginVersion = "1.17.0"
+        // https://developer.android.com/jetpack/androidx/releases/hilt
+        hiltVersion = "2.38.1"
     }
     repositories {
         google()
@@ -22,6 +24,8 @@ buildscript {
         classpath "org.jlleitschuh.gradle:ktlint-gradle:$ktlintPluginVersion"
         // Detekt
         classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detektPluginVersion"
+        // Hilt
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
