@@ -6,11 +6,12 @@ import com.roblesdotdev.act.login.domain.model.InvalidCredentialsException
 import com.roblesdotdev.act.login.domain.model.LoginResult
 import com.roblesdotdev.act.login.domain.repository.LoginRepository
 import com.roblesdotdev.act.login.domain.repository.TokenRepository
+import javax.inject.Inject
 
 /**
  * A concrete implementation of a [CredentialsLoginUseCase]
  */
-class ProdCredentialsLoginUseCase(
+class ProdCredentialsLoginUseCase @Inject constructor(
     private val loginRepository: LoginRepository,
     private val tokenRepository: TokenRepository,
 ) : CredentialsLoginUseCase {
