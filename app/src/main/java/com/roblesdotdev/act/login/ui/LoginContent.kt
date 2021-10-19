@@ -86,7 +86,7 @@ private fun LogoInputsColumn(
     onEmailChanged: (String) -> Unit,
     onPasswordChanged: (String) -> Unit,
     onLoginClicked: () -> Unit,
-    onSignupClicked: () -> Unit
+    onSignupClicked: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -104,6 +104,7 @@ private fun LogoInputsColumn(
             text = viewState.credentials.email.value,
             onTextChanged = onEmailChanged,
             errorMessage = (viewState as? LoginViewState.Active)?.emailInputErrorMessage?.getString(),
+            enabled = viewState.inputsEnabled,
         )
 
         VerticalSpacer(height = 12.dp)
@@ -112,6 +113,7 @@ private fun LogoInputsColumn(
             text = viewState.credentials.password.value,
             onTextChanged = onPasswordChanged,
             errorMessage = (viewState as? LoginViewState.Active)?.passwordInputErrorMessage?.getString(),
+            enabled = viewState.inputsEnabled,
         )
 
         if (viewState is LoginViewState.SubmissionError) {
@@ -155,7 +157,8 @@ private fun LoginButton(onClick: () -> Unit, enabled: Boolean) {
 private fun PasswordInput(
     text: String,
     onTextChanged: (String) -> Unit,
-    errorMessage: String?
+    errorMessage: String?,
+    enabled: Boolean,
 ) {
     ACTextField(
         text = text,
@@ -163,6 +166,7 @@ private fun PasswordInput(
         labelText = stringResource(R.string.password),
         errorMessage = errorMessage,
         visualTransformation = PasswordVisualTransformation(),
+        enabled = enabled,
     )
 }
 
@@ -170,13 +174,15 @@ private fun PasswordInput(
 private fun EmailInput(
     text: String,
     onTextChanged: (String) -> Unit,
-    errorMessage: String?
+    errorMessage: String?,
+    enabled: Boolean,
 ) {
     ACTextField(
         text = text,
         onTextChanged = onTextChanged,
         labelText = stringResource(R.string.email),
         errorMessage = errorMessage,
+        enabled = enabled,
     )
 }
 

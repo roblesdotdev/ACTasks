@@ -8,6 +8,7 @@ import com.roblesdotdev.act.login.domain.model.Password
 sealed class LoginViewState(
     open val credentials: Credentials,
     open val buttonsEnabled: Boolean = true,
+    open val inputsEnabled: Boolean = true,
 ) {
     /**
      * The initial state of the screen without data.
@@ -38,6 +39,7 @@ sealed class LoginViewState(
     ) : LoginViewState(
         credentials = credentials,
         buttonsEnabled = false,
+        inputsEnabled = false,
     )
 
     /**
@@ -56,5 +58,6 @@ sealed class LoginViewState(
     object Completed : LoginViewState(
         credentials = Credentials(),
         buttonsEnabled = false,
+        inputsEnabled = false,
     )
 }
