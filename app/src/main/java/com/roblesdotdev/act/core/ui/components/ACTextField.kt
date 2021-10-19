@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Surface
@@ -28,6 +29,7 @@ fun ACTextField(
     errorMessage: String? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     enabled: Boolean = true,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
 ) {
     Column {
         OutlinedTextField(
@@ -41,6 +43,7 @@ fun ACTextField(
             isError = (errorMessage != null),
             visualTransformation = visualTransformation,
             enabled = enabled,
+            keyboardOptions = keyboardOptions,
         )
 
         if (errorMessage != null) {
