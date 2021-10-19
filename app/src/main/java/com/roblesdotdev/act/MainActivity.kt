@@ -1,6 +1,7 @@
 package com.roblesdotdev.act
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.roblesdotdev.act.core.ui.theme.ACTasksTheme
@@ -13,7 +14,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ACTasksTheme {
-                LoginScreen()
+                LoginScreen(
+                    onLoginCompleted = {
+                        Log.d("ACTasksMainActivity", "Login has been completed")
+                    }
+                )
             }
         }
     }
