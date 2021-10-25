@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
 import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.roblesdotdev.act.R
+import com.roblesdotdev.act.core.ui.components.ACTextButton
 import com.roblesdotdev.act.core.ui.theme.ACTasksTheme
 import com.roblesdotdev.act.taskList.domain.model.Task
 
@@ -54,16 +54,18 @@ private fun ButtonRow(
 
 @Composable
 private fun RescheduleButton(onClick: () -> Unit) {
-    TextButton(onClick) {
-        Text(text = stringResource(R.string.reschedule))
-    }
+    ACTextButton(
+        text = stringResource(id = R.string.reschedule),
+        onClick = onClick
+    )
 }
 
 @Composable
 private fun DoneButton(onClick: () -> Unit) {
-    TextButton(onClick) {
-        Text(text = stringResource(R.string.done))
-    }
+    ACTextButton(
+        text = stringResource(id = R.string.done),
+        onClick = onClick
+    )
 }
 
 @Composable

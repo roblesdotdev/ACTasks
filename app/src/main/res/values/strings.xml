@@ -9,6 +9,6 @@
 
     <string name="err_empty_password">Please enter a password.</string>
     <string name="err_empty_email">Please enter a email.</string>
-    <string name="reschedule">RESCHEDULE</string>
-    <string name="done">DONE</string>
+    <string name="reschedule">reschedule</string>
+    <string name="done">done</string>
 </resources>
