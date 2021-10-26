@@ -11,4 +11,6 @@
     <string name="err_empty_email">Please enter a email.</string>
     <string name="reschedule">reschedule</string>
     <string name="done">done</string>
+    <string name="add_task">Add task</string>
+    <string name="today">Today</string>
 </resources>
