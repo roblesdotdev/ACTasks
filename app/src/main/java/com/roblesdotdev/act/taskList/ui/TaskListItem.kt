@@ -90,6 +90,6 @@ private fun TaskText(text: String) {
 fun TaskListItemPreview() {
     val task = Task(description = "This is a task description.")
     ACTasksTheme {
-        TaskListItem(task, onRescheduleClicked = {}, onDoneClicked = {})
+        TaskListItem(task, onRescheduleClicked = {}) {}
     }
 }
